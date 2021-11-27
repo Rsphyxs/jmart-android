@@ -37,7 +37,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
         android:text="@string/login"
-        android:backgroundTint="@color/blue_200"/>
+        android:backgroundTint="@color/purple_200"/>
 
     <TextView
         android:id="@+id/butRegister"
@@ -46,7 +46,7 @@
         android:layout_marginBottom="100dp"
         android:gravity="center"
         android:text="@string/don_t_have_account_nregister_now"
-        android:textColor="@color/blue_500"
+        android:textColor="@color/purple_500"
         android:clickable="true"
         android:focusable="true" />
 

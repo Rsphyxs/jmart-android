@@ -48,6 +48,6 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="100dp"
         android:text="@string/login"
-        android:backgroundTint="@color/blue_200"/>
+        android:backgroundTint="@color/purple_200"/>
 
 </LinearLayout>
