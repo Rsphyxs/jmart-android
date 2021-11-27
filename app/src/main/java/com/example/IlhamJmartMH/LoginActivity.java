@@ -67,15 +67,15 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     @Override
     public void onResponse(String response) {
-        Intent moveIntent = new Intent(LoginActivity.this, MainActivity.class);
         try{
             JSONObject jsonObject = new JSONObject(response);
-            moveIntent.putExtra("id", jsonObject.getInt("id"));
+            loggedAccount = gson.fromJson(jsonObject.toString(), Account.class);
         }catch (Exception e){
             Toast.makeText(this, "Login Failed", Toast.LENGTH_LONG).show();
             return;
         }
         Toast.makeText(this, "Login Success", Toast.LENGTH_LONG).show();
+        Intent moveIntent = new Intent(LoginActivity.this, MainActivity.class);
         startActivity(moveIntent);
     }
 
