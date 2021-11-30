@@ -4,16 +4,23 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
     tools:context=".MainActivity"
     android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/MainText"
-        android:layout_width="wrap_content"
+    <com.google.android.material.tabs.TabLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="@string/hello_user"
-        android:textSize="30dp"/>
+        android:id="@+id/tabs"
+        android:background="#FFFF"
+        android:elevation="5dp"
+        android:minHeight="?attr/actionBarSize"
+        app:tabMode="fixed"
+        app:tabGravity="fill"
+        app:tabTextColor="#88777777"
+        app:tabSelectedTextColor="#000000"/>
+    <androidx.viewpager.widget.ViewPager
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/pager"/>
 
 </LinearLayout>

@@ -6,4 +6,15 @@
     <string name="name">Name</string>
     <string name="don_t_have_account_nregister_now">Don\'t Have Account?\nRegister Now!</string>
     <string name="hello_user">Hello User!</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="prev">PREV</string>
+    <string name="next">NEXT</string>
+    <string name="go">GO</string>
+    <string name="lowest_price">lowest Price</string>
+    <string name="to">to</string>
+    <string name="product_condition">Product Condition</string>
+    <string name="newBox">New</string>
+    <string name="usedBox">Used</string>
+    <string name="product_category">Product Category</string>
 </resources>
