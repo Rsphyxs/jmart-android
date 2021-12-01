@@ -17,4 +17,16 @@
     <string name="newBox">New</string>
     <string name="usedBox">Used</string>
     <string name="product_category">Product Category</string>
+    <string name="account_details">Account Details</string>
+    <string name="balance">Balance</string>
+    <string name="_0_0">0.0</string>
+    <string name="top_up_amount">Top Up Amount</string>
+    <string name="top_up">TOP UP</string>
+    <string name="register_store">REGISTER STORE</string>
+    <string name="register_store_low">Register Store</string>
+    <string name="address">Address</string>
+    <string name="phone_number">Phone Number</string>
+    <string name="register">REGISTER</string>
+    <string name="cancel">CANCEL</string>
+    <string name="store">Store</string>
 </resources>
