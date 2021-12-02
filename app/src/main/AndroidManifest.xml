@@ -13,6 +13,9 @@
         android:theme="@style/Theme.Jmartandroid"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".CreateProductActivity"
+            android:exported="false" />
+        <activity
             android:name=".AboutMeActivity"
             android:exported="false" />
         <activity

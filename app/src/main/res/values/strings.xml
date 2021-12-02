@@ -29,4 +29,12 @@
     <string name="register">REGISTER</string>
     <string name="cancel">CANCEL</string>
     <string name="store">Store</string>
+    <string name="create_product">Create Product</string>
+    <string name="weight">Weight</string>
+    <string name="price">Price</string>
+    <string name="discount">Discount</string>
+    <string name="condition">Condition</string>
+    <string name="category">Category</string>
+    <string name="shipment_plan">Shipment Plan</string>
+    <string name="create">Create</string>
 </resources>
