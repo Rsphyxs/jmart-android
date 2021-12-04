@@ -40,4 +40,9 @@
     <string name="search">Search</string>
     <string name="add_box">Add Box</string>
     <string name="person">Person</string>
+    <string name="product_name">Product Name</string>
+    <string name="apply">APPLY</string>
+    <string name="highest_price">Highest Price</string>
+    <string name="products">PRODUCTS</string>
+    <string name="filter">FILTER</string>
 </resources>

@@ -8,22 +8,15 @@ import java.util.Map;
 
 public class RequestFactory {
     public static final String URL_FORMAT_ID = "http://10.0.2.2:813/%s/%d";
-    public static final String URL_FORMAT_PAGE = "http://10.0.2.2:813%s/page";
+    public static final String URL_FORMAT_PAGE = "http://10.0.2.2:813/%s/page?page=%s&pageSize=%s";
 
     public static StringRequest getById(String parentURI, int id, Response.Listener<String> listener, Response.ErrorListener errorListener){
         String url = String.format(URL_FORMAT_ID, parentURI, id);
         return new StringRequest(Request.Method.GET, url, listener, errorListener);
     }
 
-    public final StringRequest getPage(String parentURI, int page, int pageSize, Response.Listener<String>listener, Response.ErrorListener errorListener){
-        String url = String.format(URL_FORMAT_PAGE,parentURI);
-        Map<String, String> params = new HashMap<>();
-        params.put("page",String.format(URL_FORMAT_PAGE,parentURI));
-        params.put("pageSize",String.valueOf(pageSize));
-        return new StringRequest(Request.Method.GET,url,listener,errorListener){
-            public Map<String, String> getParams(){
-                return params;
-            }
-        };
+    public static StringRequest getPage(String parentURI, int page, int pageSize, Response.Listener<String> listener, Response.ErrorListener errorListener){
+        String url = String.format(URL_FORMAT_PAGE, parentURI, page, pageSize);
+        return new StringRequest(Request.Method.GET, url, listener, errorListener);
     }
 }
