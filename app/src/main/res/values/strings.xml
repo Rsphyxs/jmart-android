@@ -45,4 +45,5 @@
     <string name="highest_price">Highest Price</string>
     <string name="products">PRODUCTS</string>
     <string name="filter">FILTER</string>
+    <string name="clear">CLEAR</string>
 </resources>

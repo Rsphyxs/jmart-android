@@ -241,7 +241,7 @@
                 android:backgroundTint="#0000"
                 android:elevation="5dp"
                 android:orientation="vertical"
-                android:visibility="visible">
+                android:visibility="gone">
 
                 <TextView
                     android:layout_width="wrap_content"

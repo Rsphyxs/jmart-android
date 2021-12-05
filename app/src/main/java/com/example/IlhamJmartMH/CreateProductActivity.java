@@ -28,7 +28,7 @@ import org.json.JSONObject;
 
 public class CreateProductActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private String[] categoryList = FilterFragment.productCategory;
+    private String[] categoryList = MainActivity.productCategory;
     private String[] shipmentplanList = {"INSTANT", "SAME DAY", "NEXT DAY", "REGULER", "KARGO"};
     private EditText editName, editWeight, editPrice, editDiscount;
     private RadioButton radioNew, radioUsed;
