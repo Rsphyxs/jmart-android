@@ -46,4 +46,5 @@
     <string name="products">PRODUCTS</string>
     <string name="filter">FILTER</string>
     <string name="clear">CLEAR</string>
+    <string name="nama_produk">Nama Produk</string>
 </resources>
