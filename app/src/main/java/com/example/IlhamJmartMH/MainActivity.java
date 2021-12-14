@@ -8,8 +8,11 @@ import androidx.viewpager.widget.ViewPager;
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -21,6 +24,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -54,14 +58,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private EditText editPage, editName, editLowestprice, editHighestprice;
     private ListView listView;
     private Button buttonGo, buttonNext, buttonPrev, buttonApply, buttonClear;
-    ;
     private CheckBox checkBoxNew, checkBoxUsed;
     private Spinner spinnerCategory;
     private TabLayout tabLayout;
     private CardView productCardview, filterCardview;
     private static final Gson gson = new Gson();
-    private int page, pageSize, pageTemp;
+    private int page, pageSize, pageTemp, totalItem;
+    ;
     private boolean filterApllied = false, lastPage = false;
+    private String shipmentPlan, condition;
+    private double totalPrice;
 
     public static String[] productCategory = {"BOOK", "KITCHEN", "ELECTRONIC", "FASHION", "GAMING", "GADGET", "MOTHERCARE", "COSMETICS",
             "HEALTHCARE", "FURNITURE", "JEWELRY", "TOYS", "FNB", "STATIONERY", "SPORTS", "AUTOMOTIVE",
@@ -128,7 +134,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         ShowProductList(page, pageSize);
         listView.setOnItemClickListener(this);
-
     }
 
     @Override
@@ -317,38 +322,133 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setCancelable(true);
         dialog.setContentView(R.layout.product_dialog);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
         final TextView productName = dialog.findViewById(R.id.productName);
         final TextView productWeight = dialog.findViewById(R.id.productWeight);
+        final TextView productCondition = dialog.findViewById(R.id.productCondition);
         final TextView productPrice = dialog.findViewById(R.id.productPrice);
         final TextView productDiscount = dialog.findViewById(R.id.productDiscount);
         final TextView productShipmentplan = dialog.findViewById(R.id.productShipmentplan);
         final TextView productCategory = dialog.findViewById(R.id.productCategory);
+        final Button buyButton = dialog.findViewById(R.id.buttonBuynow);
 
         Product product = productList.get(position);
-        String shipmentPlan = "REGULER";
-        if(product.getShipmentPlans() == 1){
+        shipmentPlan = "REGULER";
+        if (product.getShipmentPlans() == 1) {
             shipmentPlan = "INSTANT";
-        }
-        else if(product.getShipmentPlans() == 2){
+        } else if (product.getShipmentPlans() == 2) {
             shipmentPlan = "SAME DAY";
-        }
-        else if(product.getShipmentPlans() == 4){
+        } else if (product.getShipmentPlans() == 4) {
             shipmentPlan = "NEXT DAY";
-        }
-        else if(product.getShipmentPlans() == 8){
+        } else if (product.getShipmentPlans() == 8) {
             shipmentPlan = "REGULER";
-        }
-        else if(product.getShipmentPlans() == 16){
+        } else if (product.getShipmentPlans() == 16) {
             shipmentPlan = "KARGO";
+        }
+
+        condition = "New";
+        if (product.isConditionUsed()) {
+            condition = "Used";
+        } else {
+            condition = "New";
         }
 
         productName.setText(product.getName());
         productWeight.setText(product.getWeight() + " Kg");
+        productCondition.setText(condition);
         productPrice.setText("Rp. " + product.getPrice());
         productDiscount.setText(product.getDiscount() + " %");
         productShipmentplan.setText(shipmentPlan);
         productCategory.setText(product.getCategory() + "");
+        buyButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Dialog dialog = new Dialog(MainActivity.this);
+                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                dialog.setCancelable(true);
+                dialog.setContentView(R.layout.payment_confirmation);
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+                final TextView productName = dialog.findViewById(R.id.productName);
+                final TextView productWeight = dialog.findViewById(R.id.productWeight);
+                final TextView productCondition = dialog.findViewById(R.id.productCondition);
+                final TextView productPrice = dialog.findViewById(R.id.productPrice);
+                final TextView productDiscount = dialog.findViewById(R.id.productDiscount);
+                final TextView productShipmentplan = dialog.findViewById(R.id.productShipmentplan);
+                final TextView productCategory = dialog.findViewById(R.id.productCategory);
+                final TextView userBalance = dialog.findViewById(R.id.userBalance);
+                final TextView finalPrice = dialog.findViewById(R.id.totalPrice);
+                final EditText qty = dialog.findViewById(R.id.productQty);
+                final ImageButton minusButton = dialog.findViewById(R.id.minusButton);
+                final ImageButton plusButton = dialog.findViewById(R.id.plusButton);
+                final Button buttonBuy = dialog.findViewById(R.id.buttonBuy);
+                final Button buttonCancel = dialog.findViewById(R.id.buttonCancel);
+
+                totalItem = 1;
+
+                qty.addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+                        if(qty.getText().toString().equals("")){
+
+                        }
+                        else{
+                            totalItem = Integer.valueOf(qty.getText().toString());
+                            totalPrice = product.getPrice() * totalItem;
+                            finalPrice.setText("Rp. " + totalPrice);
+                        }
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable s) {
+
+                    }
+                });
+
+                Product product = productList.get(position);
+
+                productName.setText(product.getName());
+                productWeight.setText(product.getWeight() + " Kg");
+                productCondition.setText(condition);
+                productPrice.setText("Rp. " + product.getPrice());
+                productDiscount.setText(product.getDiscount() + " %");
+                productShipmentplan.setText(shipmentPlan);
+                productCategory.setText(product.getCategory() + "");
+                userBalance.setText("Rp. " + account.balance);
+                finalPrice.setText("Rp. " + product.getPrice());
+
+                minusButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (totalItem > 1) {
+                            totalItem--;
+                            qty.setText(Integer.toString(totalItem));
+                        }
+                    }
+                });
+                plusButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        totalItem++;
+                        qty.setText(Integer.toString(totalItem));
+                    }
+                });
+                buttonCancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                    }
+                });
+
+                dialog.show();
+            }
+        });
 
         dialog.show();
     }

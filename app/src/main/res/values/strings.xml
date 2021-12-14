@@ -47,4 +47,11 @@
     <string name="filter">FILTER</string>
     <string name="clear">CLEAR</string>
     <string name="nama_produk">Nama Produk</string>
+    <string name="buy_now">Buy Now</string>
+    <string name="payment_confirmation">Payment Confirmation</string>
+    <string name="product_details">Product Details</string>
+    <string name="qty">Qty</string>
+    <string name="final_price">Final Price</string>
+    <string name="your_balance">Your Balance</string>
+    <string name="_1">1</string>
 </resources>

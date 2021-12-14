@@ -1,14 +1,14 @@
 package com.example.IlhamJmartMH.model;
 
 public class Product extends Serializable{
-    public int accountId;
-    public String name;
-    public int weight;
-    public boolean conditionUsed;
-    public double price;
-    public double discount;
-    public byte shipmentPlans;
-    public ProductCategory category;
+    private int accountId;
+    private String name;
+    private int weight;
+    private boolean conditionUsed;
+    private double price;
+    private double discount;
+    private byte shipmentPlans;
+    private ProductCategory category;
 
     public String toString() {
         return  "Name : " + this.name + "\nWeight : " + this.weight +
