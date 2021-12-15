@@ -54,4 +54,10 @@
     <string name="final_price">Final Price</string>
     <string name="your_balance">Your Balance</string>
     <string name="_1">1</string>
+    <string name="no">#No</string>
+    <string name="status">Status</string>
+    <string name="date">Date</string>
+    <string name="cost">Cost</string>
+    <string name="history_detail">History Detail</string>
+    <string name="invoice">Invoice</string>
 </resources>

@@ -35,9 +35,11 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.Volley;
 import com.example.IlhamJmartMH.model.Account;
+import com.example.IlhamJmartMH.model.Payment;
 import com.example.IlhamJmartMH.model.Product;
 import com.example.IlhamJmartMH.model.ProductCategory;
 import com.example.IlhamJmartMH.request.FilterRequest;
+import com.example.IlhamJmartMH.request.PaymentRequest;
 import com.example.IlhamJmartMH.request.RequestFactory;
 import com.google.android.material.tabs.TabLayout;
 import com.google.gson.Gson;
@@ -45,6 +47,7 @@ import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -64,10 +67,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private CardView productCardview, filterCardview;
     private static final Gson gson = new Gson();
     private int page, pageSize, pageTemp, totalItem;
-    ;
     private boolean filterApllied = false, lastPage = false;
     private String shipmentPlan, condition;
     private double totalPrice;
+    private Payment payment = new Payment();
 
     public static String[] productCategory = {"BOOK", "KITCHEN", "ELECTRONIC", "FASHION", "GAMING", "GADGET", "MOTHERCARE", "COSMETICS",
             "HEALTHCARE", "FURNITURE", "JEWELRY", "TOYS", "FNB", "STATIONERY", "SPORTS", "AUTOMOTIVE",
@@ -318,6 +321,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        refreshData();
         final Dialog dialog = new Dialog(MainActivity.this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setCancelable(true);
@@ -380,12 +384,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 final TextView userBalance = dialog.findViewById(R.id.userBalance);
                 final TextView finalPrice = dialog.findViewById(R.id.totalPrice);
                 final EditText qty = dialog.findViewById(R.id.productQty);
+                final EditText address = dialog.findViewById(R.id.userAddress);
                 final ImageButton minusButton = dialog.findViewById(R.id.minusButton);
                 final ImageButton plusButton = dialog.findViewById(R.id.plusButton);
                 final Button buttonBuy = dialog.findViewById(R.id.buttonBuy);
                 final Button buttonCancel = dialog.findViewById(R.id.buttonCancel);
 
                 totalItem = 1;
+                totalPrice = product.getPrice();
 
                 qty.addTextChangedListener(new TextWatcher() {
                     @Override
@@ -395,10 +401,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                     @Override
                     public void onTextChanged(CharSequence s, int start, int before, int count) {
-                        if(qty.getText().toString().equals("")){
+                        if (qty.getText().toString().equals("")) {
 
-                        }
-                        else{
+                        } else {
                             totalItem = Integer.valueOf(qty.getText().toString());
                             totalPrice = product.getPrice() * totalItem;
                             finalPrice.setText("Rp. " + totalPrice);
@@ -445,11 +450,83 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         dialog.dismiss();
                     }
                 });
+                buttonBuy.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        boolean isEmptyFields = false;
+                        if (TextUtils.isEmpty(address.getText().toString())) {
+                            isEmptyFields = true;
+                            address.setError("This can't be empty");
+                        }
+                        if (TextUtils.isEmpty(qty.getText().toString())) {
+                            isEmptyFields = true;
+                            qty.setError("This can't be empty");
+                        }
+                        if (!isEmptyFields) {
+                            if (totalPrice < account.balance) {
+                                Response.Listener<String> listenerCreatePayment = new Response.Listener<String>() {
+                                    @Override
+                                    public void onResponse(String response) {
+                                        JSONObject object = null;
+                                        try {
+                                            object = new JSONObject(response);
+                                            if (object != null) {
+                                                Toast.makeText(MainActivity.this, "Payment Success!", Toast.LENGTH_SHORT).show();
+                                                refreshData();
+                                                dialog.dismiss();
+                                            }
+                                            payment = gson.fromJson(response, Payment.class);
+                                        } catch (JSONException e) {
+                                            e.printStackTrace();
+                                        }
+                                    }
+                                };
 
+                                Response.ErrorListener errorListenerCreatePayment = new Response.ErrorListener() {
+                                    @Override
+                                    public void onErrorResponse(VolleyError error) {
+                                        Toast.makeText(MainActivity.this, "Payment Failed", Toast.LENGTH_SHORT).show();
+                                        Log.d("ERROR", error.toString());
+                                    }
+                                };
+                                PaymentRequest createPaymentRequest = new PaymentRequest(account.id, product.id, totalItem, address.getText().toString(), product.getShipmentPlans(), product.getAccountId(), listenerCreatePayment, errorListenerCreatePayment);
+                                RequestQueue queue = Volley.newRequestQueue(MainActivity.this);
+                                queue.add(createPaymentRequest);
+                            } else {
+                                Toast.makeText(MainActivity.this, "Balance Insufficient", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    }
+                });
                 dialog.show();
             }
         });
 
         dialog.show();
+    }
+
+    public void refreshData() {
+        Response.Listener<String> listener = new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject object = new JSONObject(response);
+                    account = gson.fromJson(response, Account.class);
+                    Log.d("MainActivity(Rfrsh)", "Data: " + account.balance);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+
+        Response.ErrorListener errorListener = new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("ErrorResponse", "Error: " + error);
+                Toast.makeText(MainActivity.this, "Error: " + error, Toast.LENGTH_SHORT).show();
+            }
+        };
+        RequestQueue queue = Volley.newRequestQueue(MainActivity.this);
+        queue.add(RequestFactory.getById("account", account.id, listener, errorListener));
     }
 }

@@ -1,10 +1,14 @@
 package com.example.IlhamJmartMH;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.transition.TransitionManager;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -39,6 +43,8 @@ public class AboutMeActivity extends AppCompatActivity implements View.OnClickLi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about_me);
 
+        refreshData();
+
         textName = findViewById(R.id.accountName);
         textEmail = findViewById(R.id.accountEmail);
         textBalance = findViewById(R.id.accountBalance);
@@ -65,12 +71,11 @@ public class AboutMeActivity extends AppCompatActivity implements View.OnClickLi
         textEmail.setText(account.email);
         textBalance.setText(String.valueOf(account.balance));
 
-        if(account.store == null){
+        if (account.store == null) {
             TransitionManager.beginDelayedTransition(registerstoreLayout);
             registerstoreLayout.setVisibility(View.GONE);
             registerstoreButton.setVisibility(View.VISIBLE);
-        }
-        else{
+        } else {
             registerstoreButton.setVisibility(View.GONE);
             registerstoreLayout.setVisibility(View.GONE);
             storeLayout.setVisibility(View.VISIBLE);
@@ -82,28 +87,25 @@ public class AboutMeActivity extends AppCompatActivity implements View.OnClickLi
 
     @Override
     public void onClick(View v) {
-        if(v.getId() == R.id.registerstoreButton){
+        if (v.getId() == R.id.registerstoreButton) {
             registerstoreButton.setVisibility(View.GONE);
             TransitionManager.beginDelayedTransition(registerstoreLayout);
             registerstoreLayout.setVisibility(View.VISIBLE);
-        }
-        else if(v.getId() == R.id.cancelButton){
+        } else if (v.getId() == R.id.cancelButton) {
             TransitionManager.beginDelayedTransition(registerstoreLayout);
             registerstoreLayout.setVisibility(View.GONE);
             registerstoreButton.setVisibility(View.VISIBLE);
-        }
-        else if(v.getId() == R.id.toupButton){
+        } else if (v.getId() == R.id.toupButton) {
             double topupAmount = Double.valueOf(editTopup.getText().toString().trim());
             Response.Listener<String> listener = new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {
                     Boolean object = Boolean.valueOf(response);
-                    if(object){
+                    if (object) {
                         Toast.makeText(AboutMeActivity.this, "TopUp Successful, Balance has been updated", Toast.LENGTH_SHORT).show();
                         refreshData();
                         editTopup.getText().clear();
-                    }
-                    else {
+                    } else {
                         Toast.makeText(AboutMeActivity.this, "TopUp Failed", Toast.LENGTH_SHORT).show();
                     }
                 }
@@ -120,8 +122,7 @@ public class AboutMeActivity extends AppCompatActivity implements View.OnClickLi
             TopUpRequest topUpRequest = new TopUpRequest(topupAmount, account.id, listener, errorListener);
             RequestQueue queue = Volley.newRequestQueue(AboutMeActivity.this);
             queue.add(topUpRequest);
-        }
-        else if(v.getId() == R.id.registerButton){
+        } else if (v.getId() == R.id.registerButton) {
             Toast.makeText(AboutMeActivity.this, "Button Register Clicked", Toast.LENGTH_SHORT).show();
             String dataName = editName.getText().toString();
             String dataAddress = editAddress.getText().toString();
@@ -135,7 +136,7 @@ public class AboutMeActivity extends AppCompatActivity implements View.OnClickLi
                     try {
                         Log.d("AboutMeActivity(try)", response);
                         object = new JSONObject(response);
-                        if(object != null){
+                        if (object != null) {
                             Toast.makeText(AboutMeActivity.this, "Store registered successfully", Toast.LENGTH_SHORT).show();
                         }
                         account.store = gson.fromJson(object.toString(), Store.class);
@@ -167,15 +168,15 @@ public class AboutMeActivity extends AppCompatActivity implements View.OnClickLi
         }
     }
 
-    public void refreshData(){
+    public void refreshData() {
         Response.Listener<String> listener = new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 try {
                     JSONObject object = new JSONObject(response);
                     account = gson.fromJson(response, Account.class);
-                    Log.d("AboutMeActivity(Rfrsh)", "Data: " + account.balance);
                     textBalance.setText(String.valueOf(account.balance));
+                    Log.d("AboutMeActivity(Rfrsh)", "Data: " + account.balance);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -191,5 +192,30 @@ public class AboutMeActivity extends AppCompatActivity implements View.OnClickLi
         };
         RequestQueue queue = Volley.newRequestQueue(AboutMeActivity.this);
         queue.add(RequestFactory.getById("account", account.id, listener, errorListener));
+    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.account_menu, menu);
+
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem menuItem) {
+        setActivityMode(menuItem.getItemId());
+        return super.onOptionsItemSelected(menuItem);
+    }
+
+    public void setActivityMode(int modeSelected) {
+        switch (modeSelected) {
+            case R.id.invoice:
+                Intent moveIntent = new Intent(AboutMeActivity.this, InvoiceActivity.class);
+                startActivity(moveIntent);
+                break;
+            default:
+                break;
+        }
     }
 }

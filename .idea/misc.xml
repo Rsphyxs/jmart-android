@@ -6,14 +6,18 @@
         <entry key="..\:/Ilham/UI/Smt5/Oop/Prak/AndroidStudio/jmart-android/app/src/main/res/drawable/shape.xml" value="0.14814814814814814" />
         <entry key="..\:/Ilham/UI/Smt5/Oop/Prak/AndroidStudio/jmart-android/app/src/main/res/layout/activity_about_me.xml" value="0.25" />
         <entry key="..\:/Ilham/UI/Smt5/Oop/Prak/AndroidStudio/jmart-android/app/src/main/res/layout/activity_create_product.xml" value="0.25" />
+        <entry key="..\:/Ilham/UI/Smt5/Oop/Prak/AndroidStudio/jmart-android/app/src/main/res/layout/activity_invoice.xml" value="0.5" />
         <entry key="..\:/Ilham/UI/Smt5/Oop/Prak/AndroidStudio/jmart-android/app/src/main/res/layout/activity_login.xml" value="0.25" />
         <entry key="..\:/Ilham/UI/Smt5/Oop/Prak/AndroidStudio/jmart-android/app/src/main/res/layout/activity_main.xml" value="0.22" />
         <entry key="..\:/Ilham/UI/Smt5/Oop/Prak/AndroidStudio/jmart-android/app/src/main/res/layout/activity_register.xml" value="0.2015625" />
         <entry key="..\:/Ilham/UI/Smt5/Oop/Prak/AndroidStudio/jmart-android/app/src/main/res/layout/fragment_filter.xml" value="0.25" />
         <entry key="..\:/Ilham/UI/Smt5/Oop/Prak/AndroidStudio/jmart-android/app/src/main/res/layout/fragment_products.xml" value="0.33" />
+        <entry key="..\:/Ilham/UI/Smt5/Oop/Prak/AndroidStudio/jmart-android/app/src/main/res/layout/history_cardview.xml" value="0.26979166666666665" />
+        <entry key="..\:/Ilham/UI/Smt5/Oop/Prak/AndroidStudio/jmart-android/app/src/main/res/layout/invoice_cardview.xml" value="0.5" />
         <entry key="..\:/Ilham/UI/Smt5/Oop/Prak/AndroidStudio/jmart-android/app/src/main/res/layout/payment_confirmation.xml" value="0.30052083333333335" />
         <entry key="..\:/Ilham/UI/Smt5/Oop/Prak/AndroidStudio/jmart-android/app/src/main/res/layout/product_dialog.xml" value="0.36141304347826086" />
         <entry key="..\:/Ilham/UI/Smt5/Oop/Prak/AndroidStudio/jmart-android/app/src/main/res/layout/product_list_view.xml" value="0.5" />
+        <entry key="..\:/Ilham/UI/Smt5/Oop/Prak/AndroidStudio/jmart-android/app/src/main/res/menu/account_menu.xml" value="0.26979166666666665" />
         <entry key="..\:/Ilham/UI/Smt5/Oop/Prak/AndroidStudio/jmart-android/app/src/main/res/menu/menu_navigation.xml" value="0.26927083333333335" />
         <entry key="..\:/Ilham/UI/Smt5/Oop/Prak/AndroidStudio/jmart-android/app/src/main/res/menu/navigation_toolbar.xml" value="0.2713541666666667" />
       </map>

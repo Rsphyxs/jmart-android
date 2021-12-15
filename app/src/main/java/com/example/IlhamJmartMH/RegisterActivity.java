@@ -46,8 +46,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 try {
                     JSONObject jsonObject = new JSONObject(response);
                     if(jsonObject!=null){
-                        Toast.makeText(RegisterActivity.this, "Register Success", Toast.LENGTH_LONG).show();
-                        Intent moveIntent = new Intent(RegisterActivity.this, MainActivity.class);
+                        Toast.makeText(RegisterActivity.this, "Register Success, please login again", Toast.LENGTH_LONG).show();
+                        Intent moveIntent = new Intent(RegisterActivity.this, LoginActivity.class);
                         startActivity(moveIntent);
                     }
                 } catch (JSONException e) {
