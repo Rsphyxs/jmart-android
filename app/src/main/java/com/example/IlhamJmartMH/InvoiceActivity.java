@@ -29,6 +29,11 @@ import org.json.JSONException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 
+/**
+ * Invoice Activity yang akan menampilkan invoice dari toko dan user
+ * @author Muhammad Ilham M S
+ * @version 16 Desember 2021
+ */
 public class InvoiceActivity extends AppCompatActivity {
     private RecyclerView rvInvoice;
     private static final Gson gson = new Gson();
@@ -46,11 +51,14 @@ public class InvoiceActivity extends AppCompatActivity {
 
         rvInvoice = findViewById(R.id.invoiceCardview);
         invoiceTitle = findViewById(R.id.invoiceTitle);
+        isUser = true;
 
         getUserInvoiceList();
     }
 
-
+    /**
+     * Method getUserInvoiceList yang akan menampilkan recycle view dari invoice user
+     */
     private void getUserInvoiceList() {
         Response.Listener<String> listener = new Response.Listener<String>() {      //listener
             @Override
@@ -82,6 +90,9 @@ public class InvoiceActivity extends AppCompatActivity {
         queue.add(invoiceRequest);
     }
 
+    /**
+     * Method getStoreInvoiceList yang akan menampilkan recycle view dari invoice store
+     */
     private void getStoreInvoiceList() {
         Response.Listener<String> listener = new Response.Listener<String>() {      //listener
             @Override

@@ -53,11 +53,15 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Main Activity sebagai Activity utama dari proses aplikasi
+ * @author Muhammad Ilham M S
+ * @version 16 Desember 2021
+ */
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemClickListener {
     public static List<Product> productList = new ArrayList<>();
     public static List<String> productnameList = new ArrayList<>();
     private Account account = LoginActivity.getLoggedAccount();
-    private TextView textView;
     private EditText editPage, editName, editLowestprice, editHighestprice;
     private ListView listView;
     private Button buttonGo, buttonNext, buttonPrev, buttonApply, buttonClear;
@@ -76,6 +80,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             "HEALTHCARE", "FURNITURE", "JEWELRY", "TOYS", "FNB", "STATIONERY", "SPORTS", "AUTOMOTIVE",
             "PETCARE", "ART_CRAFT", "CARPENTRY", "MISCELLANEOUS", "PROPERTY", "TRAVEL", "WEDDING"};
 
+    /**
+     * Method onCreate yang akan berjalan saat Activity dibentuk
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -104,6 +111,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         buttonApply.setOnClickListener(this);
         buttonClear.setOnClickListener(this);
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+
+            /**
+             * Method onTabSelected sebagai handler dari tab
+             * @param tab sebagai variabel yang menyimpan informasi tab
+             */
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 switch (tab.getPosition()) {
@@ -140,6 +152,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         listView.setOnItemClickListener(this);
     }
 
+    /**
+     * Method onCreateOptionsMenu yang akan menampilkan menu navigasi berdasarkan layout yang diberikan
+     * @param menu
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_navigation, menu);
@@ -147,12 +163,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         return super.onCreateOptionsMenu(menu);
     }
 
+    /**
+     * Method onOptionsItemSelected sebagai handler ketika ada menuItem yang diclick
+     * @param menuItem
+     */
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem menuItem) {
         setActivityMode(menuItem.getItemId());
         return super.onOptionsItemSelected(menuItem);
     }
 
+    /**
+     * Method setActivityMode yang akan menentukan aktivitas ketika menuItem ditekan
+     * @param modeSelected sebagai data yang menyimpan id dari itemMenu yang ditekan
+     */
     public void setActivityMode(int modeSelected) {
         Intent moveIntent;
         switch (modeSelected) {
@@ -169,6 +193,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    /**
+     * Method ShowProductList yang akan menampilkan product
+     * @param pageTemp yang menyimpan halaman sementara
+     * @param pageSize yang menyimpan ukuran halaman
+     */
     public void ShowProductList(int pageTemp, int pageSize) {
         Response.Listener<String> stringListener = new Response.Listener<String>() {
             @Override
@@ -209,6 +238,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         queue.add(RequestFactory.getPage("product", pageTemp, pageSize, stringListener, errorListener));
     }
 
+    /**
+     * Method ShowProductListFiltered yang akan menampilkan product yang sudah difilter
+     * @param page yang menyimpan halaman
+     * @param pageSize yang menyimpan ukuran halaman
+     */
     public void ShowProductListFiltered(int page, Integer pageSize) {
         filterApllied = true;
         String dataName = editName.getText().toString();
@@ -317,7 +351,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-
+    /**
+     * Method onItemClick sebagai event handler ketika ada list view yang ditekan
+     * @param parent parent
+     * @param view sebagai halaman layout
+     * @param position sebagai posisi dari listview yang ditekan
+     * @param id id
+     */
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         refreshData();
@@ -398,6 +438,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                     }
 
+                    /**
+                     * Method onTextChanged sebagai event handler ketika adanya perubahan pada edit text
+                     * @param s s
+                     * @param start start
+                     * @param before before
+                     * @param count count
+                     */
                     @Override
                     public void onTextChanged(CharSequence s, int start, int before, int count) {
                         if (qty.getText().toString().equals("")) {
@@ -504,6 +551,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         dialog.show();
     }
 
+    /**
+     * Method refreshData yang akan memperbarui data account
+     */
     public void refreshData() {
         Response.Listener<String> listener = new Response.Listener<String>() {
             @Override

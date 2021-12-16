@@ -22,6 +22,11 @@ import com.google.gson.JsonObject;
 
 import org.json.JSONObject;
 
+/**
+ * Login Activity tempat proses verifikasi login kredensial user
+ * @author Muhammad Ilham M S
+ * @version 16 Desember 2021
+ */
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener, Response.Listener<String>, Response.ErrorListener {
 
     private static final Gson gson = new Gson();
@@ -31,10 +36,17 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private Button buttonLogin;
     private TextView buttonRegister;
 
+    /**
+     * Method untuk mengakses informasi login
+     */
     public static Account getLoggedAccount(){
         return loggedAccount;
     }
 
+    /**
+     * Method onCreate yang akan berjalan saat Activity dibentuk
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,6 +61,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         buttonRegister.setOnClickListener(this);
     }
 
+    /**
+     * Method onClick sebagai handler ketika button ditekan
+     * @param v sebagai variabel yang menyimpan view layout
+     */
     @Override
     public void onClick(View v) {
         if(v.getId()==R.id.butLogin){
@@ -65,6 +81,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     }
 
+    /**
+     * Method onRespone sebagai handler yang menerima respon dari backend
+     * @param response yang menyimpan response dari backend
+     */
     @Override
     public void onResponse(String response) {
         try{
@@ -79,6 +99,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         startActivity(moveIntent);
     }
 
+    /**
+     * Method onErrorResponse sebagai handler ketika mendapatkan respone error dari backend
+     * @param error yang menyimpan error dari backend
+     */
     @Override
     public void onErrorResponse(VolleyError error) {
         Toast.makeText(this, "Login Failed", Toast.LENGTH_LONG).show();

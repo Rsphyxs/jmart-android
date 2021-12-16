@@ -27,6 +27,11 @@ import com.google.gson.Gson;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+/**
+ * CreateProductActivity sebagai Activity yang akan menginput data barang baru
+ * @author Muhammad Ilham M S
+ * @version 16 Desember 2021
+ */
 public class CreateProductActivity extends AppCompatActivity implements View.OnClickListener {
 
     private String[] categoryList = MainActivity.productCategory;
@@ -127,7 +132,10 @@ public class CreateProductActivity extends AppCompatActivity implements View.OnC
         }
     }
 
-
+    /**
+     * Method spinnerShipmentPlan yang akan mengambil data spinner shipment plan dan mengkonversikan kedalam byte
+     * @param spinnerShipmentplan sebagai variabel spinner
+     */
     public byte spinnerShipmentPlan(Spinner spinnerShipmentplan) {
         String dataShipmentplan = spinnerShipmentplan.getSelectedItem().toString();
         if (dataShipmentplan.equals("INSTANT")) {
@@ -145,7 +153,10 @@ public class CreateProductActivity extends AppCompatActivity implements View.OnC
         }
     }
 
-
+    /**
+     * Method spinnerProductCategory yang akan mengambil data spinner product category dan mengkonversikan kedalam enum category
+     * @param spinnerProductcategory sebagai variabel spinner
+     */
     public ProductCategory spinnerProductCategory(Spinner spinnerProductcategory) {
         ProductCategory category = ProductCategory.BOOK;
         String productCategory = spinnerProductcategory.getSelectedItem().toString();

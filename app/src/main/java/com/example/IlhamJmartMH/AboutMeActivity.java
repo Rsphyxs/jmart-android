@@ -30,6 +30,11 @@ import com.google.gson.Gson;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+/**
+ * AboutMeActivity sebagai Activity yang menampilkan informasi account
+ * @author Muhammad Ilham M S
+ * @version 16 Desember 2021
+ */
 public class AboutMeActivity extends AppCompatActivity implements View.OnClickListener {
     private TextView textName, textEmail, textBalance, textStorename, textStoreAddress, textStorePhonenumber;
     private EditText editName, editAddress, editPhonenumber, editTopup;

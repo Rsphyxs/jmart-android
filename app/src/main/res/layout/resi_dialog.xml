@@ -20,7 +20,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:gravity="center"
-            android:text="Input no Receipt"
+            android:text="@string/input_no_receipt"
             android:textSize="20sp"/>
 
         <EditText

@@ -19,6 +19,11 @@ import com.example.IlhamJmartMH.request.RegisterRequest;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+/**
+ * Register Activity sebagai Activity tempat user mendaftarkan akun baru
+ * @author Muhammad Ilham M S
+ * @version 16 Desember 2021
+ */
 public class RegisterActivity extends AppCompatActivity implements View.OnClickListener {
     private EditText editName;
     private EditText editEmail;

@@ -8,6 +8,7 @@ import com.android.volley.toolbox.StringRequest;
 import java.util.HashMap;
 import java.util.Map;
 
+
 public class RegisterStoreRequest extends StringRequest {
     private static final String URL_FORMAT = "http://10.0.2.2:813/account/%d/registerStore";
     private final Map<String, String> params;

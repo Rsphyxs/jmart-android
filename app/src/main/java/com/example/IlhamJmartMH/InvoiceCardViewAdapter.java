@@ -38,6 +38,11 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+/**
+ * InvoiceCardViewAdapter sebagai Adapter dari History CardView
+ * @author Muhammad Ilham M S
+ * @version 16 Desember 2021
+ */
 public class InvoiceCardViewAdapter extends RecyclerView.Adapter<InvoiceCardViewAdapter.InvoiceCardViewViewHolder> {
     private ArrayList<Payment> listPayment = new ArrayList<>();
     private Product product;
@@ -46,10 +51,19 @@ public class InvoiceCardViewAdapter extends RecyclerView.Adapter<InvoiceCardView
     private Payment.Record lastRecord;
     private Account account = LoginActivity.getLoggedAccount();
 
+    /**
+     * Method InvoiceCardCiewAdapter
+     * @param list sebagai parameter list
+     */
     public InvoiceCardViewAdapter(ArrayList<Payment> list) {
         this.listPayment = list;
     }
 
+    /**
+     * Method onCreateViewHolder yang akan menampilkan layout cardview
+     * @param viewGroup viewGroup
+     * @param viewType viewType
+     */
     @NonNull
     @Override
     public InvoiceCardViewAdapter.InvoiceCardViewViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
@@ -57,6 +71,11 @@ public class InvoiceCardViewAdapter extends RecyclerView.Adapter<InvoiceCardView
         return new InvoiceCardViewAdapter.InvoiceCardViewViewHolder(view);
     }
 
+    /**
+     * Method onBindViewHolder
+     * @param holder sebagai holder dari cardview
+     * @param position sebagai parameter dari posisi cardview
+     */
     @Override
     public void onBindViewHolder(@NonNull final InvoiceCardViewViewHolder holder, int position) {
         Payment payment = listPayment.get(position);
@@ -119,9 +138,9 @@ public class InvoiceCardViewAdapter extends RecyclerView.Adapter<InvoiceCardView
                     }
                 };
 
-                PaymentRequest acceptPaymentRequest = new PaymentRequest(payment.id, listenerAcceptPayment, errorListenerAcceptPayment);
+                PaymentRequest paymentRequest = new PaymentRequest(payment.id, listenerAcceptPayment, errorListenerAcceptPayment);
                 RequestQueue queue = Volley.newRequestQueue(holder.InvoiceCardview.getContext());
-                queue.add(acceptPaymentRequest);
+                queue.add(paymentRequest);
             }
         });
 
@@ -224,11 +243,17 @@ public class InvoiceCardViewAdapter extends RecyclerView.Adapter<InvoiceCardView
         });
     }
 
+    /**
+     * Method getItemCount yang akan memberi nilai return jumlah ArrayList yang akan ditampilkan
+     */
     @Override
     public int getItemCount() {
         return listPayment.size();
     }
 
+    /**
+     * InvoiceCardViewViewHolder sebagai gilder dari CardView
+     */
     class InvoiceCardViewViewHolder extends RecyclerView.ViewHolder {
         TextView noInvoice, invoiceName, invoiceStatus, invoiceDate, invoiceAddress, invoiceCost;
         ImageButton expandButton;
@@ -257,8 +282,13 @@ public class InvoiceCardViewAdapter extends RecyclerView.Adapter<InvoiceCardView
         }
     }
 
+    /**
+     * Method getProductData yang akan mengambil informasi data berdasarkan data payment
+     * @param holder holder
+     * @param payment payment
+     */
     public void getProductData(InvoiceCardViewAdapter.InvoiceCardViewViewHolder holder, Payment payment) {
-        Response.Listener<String> listenerProduct = new Response.Listener<String>() {       //listener
+        Response.Listener<String> listenerProduct = new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 JSONObject object = null;
@@ -273,7 +303,7 @@ public class InvoiceCardViewAdapter extends RecyclerView.Adapter<InvoiceCardView
             }
         };
 
-        Response.ErrorListener errorListener = new Response.ErrorListener() {       //errorListener jika tidak terkoneksi ke backend
+        Response.ErrorListener errorListener = new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Toast.makeText(holder.noInvoice.getContext(), "Take Information Failed", Toast.LENGTH_SHORT).show();
