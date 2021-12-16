@@ -60,25 +60,25 @@ public class InvoiceActivity extends AppCompatActivity {
      * Method getUserInvoiceList yang akan menampilkan recycle view dari invoice user
      */
     private void getUserInvoiceList() {
-        Response.Listener<String> listener = new Response.Listener<String>() {      //listener
+        Response.Listener<String> listener = new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 try {
                     userInvoiceList.clear();
                     JSONArray object = new JSONArray(response);
                     Type paymentListType = new TypeToken<ArrayList<Payment>>() {
-                    }.getType();     //mengambil tipe list Payment
+                    }.getType();
                     userInvoiceList = gson.fromJson(response, paymentListType);
                     rvInvoice.setLayoutManager(new LinearLayoutManager(InvoiceActivity.this));
                     InvoiceCardViewAdapter invoiceCardViewAdapter = new InvoiceCardViewAdapter(userInvoiceList);
                     rvInvoice.setAdapter(invoiceCardViewAdapter);
-                } catch (JSONException e) {     //jika response null
+                } catch (JSONException e) {
                     e.printStackTrace();
                 }
             }
         };
 
-        Response.ErrorListener errorListener = new Response.ErrorListener() {       //errorListener jika tidak terkoneksi ke backend
+        Response.ErrorListener errorListener = new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Toast.makeText(InvoiceActivity.this, "Get List Failed due to Connection", Toast.LENGTH_SHORT).show();
@@ -94,19 +94,19 @@ public class InvoiceActivity extends AppCompatActivity {
      * Method getStoreInvoiceList yang akan menampilkan recycle view dari invoice store
      */
     private void getStoreInvoiceList() {
-        Response.Listener<String> listener = new Response.Listener<String>() {      //listener
+        Response.Listener<String> listener = new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 try {
                     storeInvoiceList.clear();
                     JSONArray object = new JSONArray(response);
                     Type paymentListType = new TypeToken<ArrayList<Payment>>() {
-                    }.getType();     //mengambil tipe list Payment
+                    }.getType();
                     storeInvoiceList = gson.fromJson(response, paymentListType);
                     rvInvoice.setLayoutManager(new LinearLayoutManager(InvoiceActivity.this));
                     InvoiceCardViewAdapter invoiceCardViewAdapter = new InvoiceCardViewAdapter(storeInvoiceList);
                     rvInvoice.setAdapter(invoiceCardViewAdapter);
-                } catch (JSONException e) {     //jika response null
+                } catch (JSONException e) {
                     e.printStackTrace();
                 }
             }
@@ -115,7 +115,7 @@ public class InvoiceActivity extends AppCompatActivity {
         Response.ErrorListener errorListener = new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(InvoiceActivity.this, "Get List Failed due to Connection", Toast.LENGTH_SHORT).show();
+                Toast.makeText(InvoiceActivity.this, "Failed to get List", Toast.LENGTH_SHORT).show();
             }
         };
 

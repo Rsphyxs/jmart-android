@@ -107,11 +107,11 @@ public class AboutMeActivity extends AppCompatActivity implements View.OnClickLi
                 public void onResponse(String response) {
                     Boolean object = Boolean.valueOf(response);
                     if (object) {
-                        Toast.makeText(AboutMeActivity.this, "TopUp Successful, Balance has been updated", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(AboutMeActivity.this, "Top Up Successful, Balance has been updated", Toast.LENGTH_SHORT).show();
                         refreshData();
                         editTopup.getText().clear();
                     } else {
-                        Toast.makeText(AboutMeActivity.this, "TopUp Failed", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(AboutMeActivity.this, "Top Up Failed", Toast.LENGTH_SHORT).show();
                     }
                 }
             };
@@ -119,7 +119,7 @@ public class AboutMeActivity extends AppCompatActivity implements View.OnClickLi
             Response.ErrorListener errorListener = new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
-                    Toast.makeText(AboutMeActivity.this, "Top Up Failed Connection", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AboutMeActivity.this, "Top Up Failed", Toast.LENGTH_SHORT).show();
                     Log.d("ERROR", error.toString());
                 }
             };
@@ -161,7 +161,7 @@ public class AboutMeActivity extends AppCompatActivity implements View.OnClickLi
             Response.ErrorListener errorListener = new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
-                    Toast.makeText(AboutMeActivity.this, "Register Store Failed Connection", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AboutMeActivity.this, "Register Store Failed", Toast.LENGTH_SHORT).show();
                     Log.d("ERROR", error.toString());
                 }
             };

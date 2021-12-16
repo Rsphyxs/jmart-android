@@ -131,10 +131,10 @@ public class InvoiceCardViewAdapter extends RecyclerView.Adapter<InvoiceCardView
                     }
                 };
 
-                Response.ErrorListener errorListenerAcceptPayment = new Response.ErrorListener() {      //errorListener jika tidak terkoneksi ke backend
+                Response.ErrorListener errorListenerAcceptPayment = new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(holder.InvoiceCardview.getContext(), "Connection Failed", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(holder.InvoiceCardview.getContext(), "Connection Failed!", Toast.LENGTH_SHORT).show();
                     }
                 };
 
@@ -150,10 +150,10 @@ public class InvoiceCardViewAdapter extends RecyclerView.Adapter<InvoiceCardView
                 Response.Listener<String> listenerCancelPayment = new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Boolean isAccepted = Boolean.valueOf(response);     //response berbentuk boolean pertanda keberhasilan untuk melakukan cancel payment
+                        Boolean isAccepted = Boolean.valueOf(response);
                         if (isAccepted) {
                             double price = Double.valueOf(holder.invoiceCost.getText().toString().trim().substring(3));
-                            Response.Listener<String> listener = new Response.Listener<String>() {      //listener top up
+                            Response.Listener<String> listener = new Response.Listener<String>() {
                                 @Override
                                 public void onResponse(String response) {
                                     Boolean object = Boolean.valueOf(response);
@@ -165,7 +165,7 @@ public class InvoiceCardViewAdapter extends RecyclerView.Adapter<InvoiceCardView
                                 }
                             };
 
-                            Response.ErrorListener errorListener = new Response.ErrorListener() {       //errorListener jika tidak terkoneksi ke backend
+                            Response.ErrorListener errorListener = new Response.ErrorListener() {
                                 @Override
                                 public void onErrorResponse(VolleyError error) {
                                     Toast.makeText(holder.InvoiceCardview.getContext(), "Failed Connection", Toast.LENGTH_SHORT).show();
@@ -181,12 +181,12 @@ public class InvoiceCardViewAdapter extends RecyclerView.Adapter<InvoiceCardView
                             holder.layoutConfirmation.setVisibility(View.GONE);
 
                         } else {
-                            Toast.makeText(holder.InvoiceCardview.getContext(), "This payment can't be cancelled!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(holder.InvoiceCardview.getContext(), "The payment can't be cancelled!", Toast.LENGTH_SHORT).show();
                         }
                     }
                 };
 
-                Response.ErrorListener errorListenerCancelPayment = new Response.ErrorListener() {      //errorListener jika tidak terkoneksi ke backend
+                Response.ErrorListener errorListenerCancelPayment = new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Toast.makeText(holder.InvoiceCardview.getContext(), "Connection Failed", Toast.LENGTH_SHORT).show();
@@ -227,7 +227,7 @@ public class InvoiceCardViewAdapter extends RecyclerView.Adapter<InvoiceCardView
                             }
                         };
 
-                        Response.ErrorListener errorListenerSubmitPayment = new Response.ErrorListener() {      //errorListener jika tidak terkoneksi ke backend
+                        Response.ErrorListener errorListenerSubmitPayment = new Response.ErrorListener() {
                             @Override
                             public void onErrorResponse(VolleyError error) {
                                 Toast.makeText(holder.InvoiceCardview.getContext(), "Connection Failed", Toast.LENGTH_SHORT).show();
@@ -311,7 +311,7 @@ public class InvoiceCardViewAdapter extends RecyclerView.Adapter<InvoiceCardView
         };
 
         RequestQueue queue = Volley.newRequestQueue(holder.noInvoice.getContext());
-        queue.add(RequestFactory.getById("product", payment.productId, listenerProduct, errorListener));        //memasukkan request untuk mengambil informasi payment berdasarkan id
+        queue.add(RequestFactory.getById("product", payment.productId, listenerProduct, errorListener));
     }
 
 

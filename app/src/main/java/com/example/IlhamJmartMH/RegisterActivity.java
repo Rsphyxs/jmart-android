@@ -57,14 +57,14 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
-                    Toast.makeText(RegisterActivity.this, "Register Failed", Toast.LENGTH_LONG).show();
+                    Toast.makeText(RegisterActivity.this, "Register Failed, Credential invalid", Toast.LENGTH_LONG).show();
                 }
             }
         };
         Response.ErrorListener errorListener = new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(RegisterActivity.this, "Register Failed", Toast.LENGTH_SHORT).show();
+                Toast.makeText(RegisterActivity.this, "Register Failed, please try a few minutes later", Toast.LENGTH_SHORT).show();
             }
         };
         String dataName = editName.getText().toString();

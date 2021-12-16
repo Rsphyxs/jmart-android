@@ -113,7 +113,7 @@ public class CreateProductActivity extends AppCompatActivity implements View.OnC
                 Response.ErrorListener errorListener = new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(CreateProductActivity.this, "Create Product Failed Connection", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(CreateProductActivity.this, "Create Product Failed", Toast.LENGTH_SHORT).show();
                         Log.d("ERROR", error.toString());
                     }
                 };

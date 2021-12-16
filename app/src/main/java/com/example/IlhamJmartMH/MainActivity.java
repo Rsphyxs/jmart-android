@@ -302,9 +302,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         } else if (dataHighestprice == 0) {
             filterRequest = new FilterRequest(page, pageSize, account.id, dataLowestprice, dataName, category, listener, errorListener);
         } else if (dataLowestprice == 0) {
-            filterRequest = new FilterRequest(dataName, page, account.id, dataHighestprice, category, listener, errorListener);
+            filterRequest = new FilterRequest(dataName, page, pageSize, account.id, dataHighestprice, category, listener, errorListener);
         } else {
-            filterRequest = new FilterRequest(page, account.id, dataName, dataLowestprice, dataHighestprice, category, listener, errorListener);
+            filterRequest = new FilterRequest(page, pageSize, account.id, dataName, dataLowestprice, dataHighestprice, category, listener, errorListener);
         }
         RequestQueue queue = Volley.newRequestQueue(MainActivity.this);
         queue.add(filterRequest);

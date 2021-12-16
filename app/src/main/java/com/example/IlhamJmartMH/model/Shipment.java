@@ -2,6 +2,11 @@ package com.example.IlhamJmartMH.model;
 
 import java.text.SimpleDateFormat;
 
+/**
+ * Model untuk tipe model Shipment
+ * @author Mario Claudius
+ * @version 16 Desember 2021
+ */
 public class Shipment {
     public static final Plan INSTANT = new Plan((byte)(1 << 0));
     public static final Plan SAME_DAY = new Plan((byte)(1 << 1));
