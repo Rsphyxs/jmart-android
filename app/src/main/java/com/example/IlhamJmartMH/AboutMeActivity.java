@@ -220,6 +220,18 @@ public class AboutMeActivity extends AppCompatActivity implements View.OnClickLi
                 break;
             case R.id.refresh:
                 refreshData();
+                if (account.store == null) {
+                    TransitionManager.beginDelayedTransition(registerstoreLayout);
+                    registerstoreLayout.setVisibility(View.GONE);
+                    registerstoreButton.setVisibility(View.VISIBLE);
+                } else {
+                    registerstoreButton.setVisibility(View.GONE);
+                    registerstoreLayout.setVisibility(View.GONE);
+                    storeLayout.setVisibility(View.VISIBLE);
+                    textStorename.setText(account.store.name);
+                    textStoreAddress.setText(account.store.address);
+                    textStorePhonenumber.setText(account.store.phoneNumber);
+                }
             default:
                 break;
         }
