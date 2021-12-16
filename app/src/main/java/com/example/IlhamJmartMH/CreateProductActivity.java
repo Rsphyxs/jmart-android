@@ -21,6 +21,7 @@ import com.example.IlhamJmartMH.model.Account;
 import com.example.IlhamJmartMH.model.Product;
 import com.example.IlhamJmartMH.model.ProductCategory;
 import com.example.IlhamJmartMH.request.CreateProductRequest;
+import com.example.IlhamJmartMH.request.RequestFactory;
 import com.google.gson.Gson;
 
 import org.json.JSONException;
@@ -35,6 +36,7 @@ public class CreateProductActivity extends AppCompatActivity implements View.OnC
     private Spinner spinnerCategory, spinnerShipmentplan;
     private Button buttonCreate, buttonCancel;
     private static final Gson gson = new Gson();
+    private Account account = LoginActivity.getLoggedAccount();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,56 +69,61 @@ public class CreateProductActivity extends AppCompatActivity implements View.OnC
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.buttonCreate) {
-            Account account = LoginActivity.getLoggedAccount();
-            Log.d("CreateProductActivity", "Id :" + account.id);
-            String name = editName.getText().toString();
-            String weight = editWeight.getText().toString();
-            String price = editPrice.getText().toString();
-            String discount = editDiscount.getText().toString();
+            refreshData();
+            if(account.store != null){
+                String name = editName.getText().toString();
+                String weight = editWeight.getText().toString();
+                String price = editPrice.getText().toString();
+                String discount = editDiscount.getText().toString();
 
-            int dataWeight = Integer.valueOf(weight);
-            double dataPrice = Double.valueOf(price);
-            double dataDiscount = Double.valueOf(discount);
-            boolean dataRadiobutton = false;
-            if (radioNew.isChecked()) {
-                dataRadiobutton = true;
-            }
-            byte dataShipmentplan = spinnerShipmentPlan(spinnerShipmentplan);
-            ProductCategory dataProductcategory = spinnerProductCategory(spinnerCategory);
+                int dataWeight = Integer.valueOf(weight);
+                double dataPrice = Double.valueOf(price);
+                double dataDiscount = Double.valueOf(discount);
+                boolean dataRadiobutton = false;
+                if (radioNew.isChecked()) {
+                    dataRadiobutton = true;
+                }
+                byte dataShipmentplan = spinnerShipmentPlan(spinnerShipmentplan);
+                ProductCategory dataProductcategory = spinnerProductCategory(spinnerCategory);
 
-            Response.Listener<String> listener = new Response.Listener<String>() {
-                @Override
-                public void onResponse(String response) {
-                    Log.d("CreateProductActivity", response);
-                    JSONObject object = null;
-                    try {
-                        object = new JSONObject(response);
-                        if(object != null){
-                            Toast.makeText(CreateProductActivity.this, "Product created successfully", Toast.LENGTH_SHORT).show();
+                Response.Listener<String> listener = new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.d("CreateProductActivity", response);
+                        JSONObject object = null;
+                        try {
+                            object = new JSONObject(response);
+                            if(object != null){
+                                Toast.makeText(CreateProductActivity.this, "Product created successfully", Toast.LENGTH_SHORT).show();
+                            }
+                            Product product = gson.fromJson(response, Product.class);
+                            Intent intent = new Intent(CreateProductActivity.this, MainActivity.class);
+                            startActivity(intent);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
                         }
-                        Product product = gson.fromJson(response, Product.class);
-                        Intent intent = new Intent(CreateProductActivity.this, MainActivity.class);
-                        startActivity(intent);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
                     }
-                }
-            };
+                };
 
-            Response.ErrorListener errorListener = new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    Toast.makeText(CreateProductActivity.this, "Create Product Failed Connection", Toast.LENGTH_SHORT).show();
-                    Log.d("ERROR", error.toString());
-                }
-            };
+                Response.ErrorListener errorListener = new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(CreateProductActivity.this, "Create Product Failed Connection", Toast.LENGTH_SHORT).show();
+                        Log.d("ERROR", error.toString());
+                    }
+                };
 
-            CreateProductRequest createProductRequest = new CreateProductRequest(account.id, name, dataWeight, dataRadiobutton, dataPrice, dataDiscount, dataProductcategory, dataShipmentplan, listener, errorListener);
-            RequestQueue queue = Volley.newRequestQueue(CreateProductActivity.this);
-            queue.add(createProductRequest);
+                CreateProductRequest createProductRequest = new CreateProductRequest(account.id, name, dataWeight, dataRadiobutton, dataPrice, dataDiscount, dataProductcategory, dataShipmentplan, listener, errorListener);
+                RequestQueue queue = Volley.newRequestQueue(CreateProductActivity.this);
+                queue.add(createProductRequest);
+            }
+            else{
+                Toast.makeText(CreateProductActivity.this, "You don't have a store", Toast.LENGTH_SHORT).show();
+            }
         }
         else if (v.getId() == R.id.buttonCancel) {
-
+            Intent intent = new Intent(CreateProductActivity.this, MainActivity.class);
+            startActivity(intent);
         }
     }
 
@@ -148,5 +155,30 @@ public class CreateProductActivity extends AppCompatActivity implements View.OnC
             }
         }
         return category;
+    }
+
+    public void refreshData() {
+        Response.Listener<String> listener = new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject object = new JSONObject(response);
+                    account = gson.fromJson(response, Account.class);
+                    Log.d("MainActivity(Rfrsh)", "Data: " + account.balance);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+
+        Response.ErrorListener errorListener = new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("ErrorResponse", "Error: " + error);
+                Toast.makeText(CreateProductActivity.this, "Error: " + error, Toast.LENGTH_SHORT).show();
+            }
+        };
+        RequestQueue queue = Volley.newRequestQueue(CreateProductActivity.this);
+        queue.add(RequestFactory.getById("account", account.id, listener, errorListener));
     }
 }

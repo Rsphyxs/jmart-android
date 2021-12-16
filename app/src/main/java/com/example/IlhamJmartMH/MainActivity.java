@@ -81,6 +81,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        refreshData();
         listView = findViewById(R.id.productListview);
         editPage = findViewById(R.id.pageNumber);
         buttonGo = findViewById(R.id.buttonGo);
@@ -155,8 +156,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void setActivityMode(int modeSelected) {
         Intent moveIntent;
         switch (modeSelected) {
-            case R.id.search:
-                break;
             case R.id.addbox:
                 moveIntent = new Intent(MainActivity.this, CreateProductActivity.class);
                 startActivity(moveIntent);

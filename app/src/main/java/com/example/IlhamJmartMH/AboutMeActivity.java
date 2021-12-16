@@ -123,7 +123,6 @@ public class AboutMeActivity extends AppCompatActivity implements View.OnClickLi
             RequestQueue queue = Volley.newRequestQueue(AboutMeActivity.this);
             queue.add(topUpRequest);
         } else if (v.getId() == R.id.registerButton) {
-            Toast.makeText(AboutMeActivity.this, "Button Register Clicked", Toast.LENGTH_SHORT).show();
             String dataName = editName.getText().toString();
             String dataAddress = editAddress.getText().toString();
             String dataPhoneNumber = editPhonenumber.getText().toString();
@@ -214,6 +213,8 @@ public class AboutMeActivity extends AppCompatActivity implements View.OnClickLi
                 Intent moveIntent = new Intent(AboutMeActivity.this, InvoiceActivity.class);
                 startActivity(moveIntent);
                 break;
+            case R.id.refresh:
+                refreshData();
             default:
                 break;
         }

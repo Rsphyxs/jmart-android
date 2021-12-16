@@ -3,16 +3,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/invoice"
-        android:icon="@drawable/ic_baseline_pending_actions_24"
+        android:id="@+id/store"
+        android:icon="@drawable/ic_baseline_store_24"
         android:iconTint="@color/white"
         app:showAsAction="collapseActionView|always"/>
 
     <item
-        android:id="@+id/refresh"
-        android:icon="@drawable/ic_baseline_refresh_24"
+        android:id="@+id/user"
+        android:icon="@drawable/ic_baseline_person_24"
         android:iconTint="@color/white"
-        android:title="@string/person"
-        app:showAsAction="collapseActionView|always"/>
+        app:showAsAction="collapseActionView|always"
+        android:visible="false"/>
 
 </menu>

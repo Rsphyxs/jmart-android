@@ -8,7 +8,10 @@ import java.util.Map;
 
 public class PaymentRequest extends StringRequest {
     private static final String CREATE_URL = "http://10.0.2.2:813/payment/create";
-    public static final String SUBMIT_URL = "http://10.0.2.2:813/payment/%d/submit";
+    private static final String SUBMIT_URL = "http://10.0.2.2:813/payment/%d/submit";
+    private static final String ACCEPT_URL = "http://10.0.2.2:813/payment/%d/accept";
+    public static final String CANCEL_URL = "http://10.0.2.2:813/payment/%d/cancel";
+
     private final Map<String, String> params;
 
     //Create
@@ -21,6 +24,20 @@ public class PaymentRequest extends StringRequest {
         params.put("shipmentAddress", shipmentAddress);
         params.put("shipmentPlan", String.valueOf(shipmentPlan));
         params.put("storeId", String.valueOf(storeId));
+    }
+
+    //Accept
+    public PaymentRequest(int id, Response.Listener<String> listener, Response.ErrorListener errorListener) {
+        super(Method.POST, String.format(ACCEPT_URL, id), listener, errorListener);
+        params = new HashMap<>();
+        params.put("id", String.valueOf(id));
+    }
+
+    //Cancel
+    public PaymentRequest(Response.Listener<String> listener ,int id, Response.ErrorListener errorListener) {
+        super(Method.POST, String.format(CANCEL_URL, id), listener, errorListener);
+        params = new HashMap<>();
+        params.put("id", String.valueOf(id));
     }
 
     //Submit

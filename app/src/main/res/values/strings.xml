@@ -60,4 +60,8 @@
     <string name="cost">Cost</string>
     <string name="history_detail">History Detail</string>
     <string name="invoice">Invoice</string>
+    <string name="invoice_user">Invoice User</string>
+    <string name="accept">Accept</string>
+    <string name="submit">Submit</string>
+    <string name="input_receipt">Input Receipt</string>
 </resources>
